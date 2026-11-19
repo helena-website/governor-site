@@ -18,7 +18,7 @@ A working prototype of the updated Office of the Governor website (today's https
 
 | Page | Path | Notes |
 |---|---|---|
-| Home | `/` | Hero ("Let's get to work"), How can we help, Get involved, latest news |
+| Home | `/` | Hero ("Let's get to work"), How can we help you, Get involved |
 | About | `/about/` | Governor bio and office address |
 | How can we help you | `/how-can-we-help/` | "Have a problem" form, phone option, state services quick links, citations/proclamations, preferred license plate |
 | Invite the Governor | `/how-can-we-help/invite-the-governor/` | Web form replacing today's downloadable PDF |
@@ -33,11 +33,12 @@ A working prototype of the updated Office of the Governor website (today's https
 
 | Today | New |
 |---|---|
-| Home, About, Accomplishments, Budget, Newsroom, Constituent Services, Data Dashboards, Learn365RI, Contact | About, How can we help you, News, Get Involved (green button) |
+| Home, About, Accomplishments, Budget, Newsroom, Constituent Services, Data Dashboards, Learn365RI, Contact | About, How can we help you, Get Involved, News |
 
 - **Removed:** Accomplishments, Budget, Contact (folded into How can we help you), Data Dashboards, Learn365RI.
-- **Header:** one blue row, like helenatransition.com: logo, menu, language picker. On phones the menu opens below the header.
-- **Footer:** keeps every current footer link, plus the APRA request link.
+- **Header:** one blue row, like helenatransition.com: logo, menu (About, How can we help you, Get Involved, News), language picker. On phones the menu opens below the header.
+- **Browser tab titles:** "Governor Helena Foulkes" on the home page, "<Page> | Governor Helena Foulkes" elsewhere (e.g. "How Can We Help You | Governor Helena Foulkes").
+- **Footer:** office address and phone; Related sites (RI Jobs, RI.gov, State Agencies A-Z, APRA Request); Follow (Facebook, Instagram, X); accessibility and privacy policies link.
 
 ## Forms
 
@@ -71,11 +72,11 @@ Square corners throughout. Contrast ratios are listed at the top of `assets/site
 **Logo:** an original anchor-and-13-stars mark based on the Rhode Island flag's seal, drawn by `_build/logo.py`.
 - `assets/logo-on-white.svg`: navy anchor, gold stars, blue HOPE ribbon
 - `assets/logo-on-blue.svg`: white anchor, gold stars, white HOPE ribbon
-- `assets/favicon.svg`
+- `assets/favicon.svg` (unused; the browser tab icon is `logo-on-white.svg`, transparent background)
 
 ## Translation
 
-Same machine translation and languages as today's site (Google Translate, which today's GTranslate widget wraps), behind a plain `<select>` in the header that defaults to English. Languages: English, Arabic, Chinese (Simplified), Chinese (Traditional), French, Italian, Polish, Portuguese, Spanish, Vietnamese, Haitian Creole, Khmer. Logic is in `assets/translate.js`: choosing a language sets Google's `googtrans` cookie and reloads; English clears it. Production should add human-reviewed Spanish for the top tasks.
+Same machine translation and languages as today's site (Google Translate, which today's GTranslate widget wraps), behind a compact `<select>` in the header showing language codes (EN, ES, FR...) that defaults to EN. Languages: English, Arabic, Chinese (Simplified), Chinese (Traditional), French, Italian, Polish, Portuguese, Spanish, Vietnamese, Haitian Creole, Khmer. Logic is in `assets/translate.js`: choosing a language sets Google's `googtrans` cookie and reloads; English clears it. Production should add human-reviewed Spanish for the top tasks.
 
 ## Accessibility
 

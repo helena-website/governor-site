@@ -22,21 +22,8 @@ OFFICE = {
 # Languages offered by the current governor.ri.gov (GTranslate). English is the default.
 LANGS = ["en", "ar", "zh-CN", "zh-TW", "fr", "it", "pl", "pt", "es", "vi", "ht", "km"]
 
-NAV = [("about/", "About"), ("how-can-we-help/", "How can we help you"), ("news/", "News"), ("get-involved/", "Get Involved")]
+NAV = [("about/", "About"), ("how-can-we-help/", "How can we help you"), ("get-involved/", "Get Involved"), ("news/", "News")]
 
-FOOTER_RELATED = [
-    ("RI General Laws", "http://webserver.rilin.state.ri.us/Statutes/"),
-    ("RI Government Agencies", "https://www.ri.gov/guide/"),
-    ("RI Transparency Portal", "http://www.transparency.ri.gov/"),
-    ("RI Jobs", "https://www.employri.org/"),
-]
-FOOTER_STATE = [
-    ("Office of the Governor", "{home}"),
-    ("RI.gov", "https://www.ri.gov/"),
-    ("Elected Officials", "https://www.ri.gov/guide/"),
-    ("State Agencies (A-Z)", "https://www.ri.gov/guide/"),
-    ("RI 2030: A game plan for Rhode Island", "https://rhodeisland2030.ri.gov/"),
-]
 APRA = "https://governor.ri.gov/apra-request"
 
 
@@ -48,18 +35,16 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
     nav = []
     for href, label in NAV:
         cur = ' aria-current="page"' if path.startswith(href) else ""
-        cls = ' class="btn btn-green nav-cta"' if href == "get-involved/" else ""
-        nav.append(f'<li><a{cls} href="{pre}{href}"{cur}>{label}</a></li>')
+        nav.append(f'<li><a href="{pre}{href}"{cur}>{label}</a></li>')
     names = {"en": "English", "ar": "العربية", "zh-CN": "简体中文", "zh-TW": "繁體中文", "fr": "Français", "it": "Italiano",
              "pl": "Polski", "pt": "Português", "es": "Español", "vi": "Tiếng Việt", "ht": "Kreyòl ayisyen", "km": "ភាសាខ្មែរ"}
-    opts = "".join(f'<option value="{l}" lang="{l}">{names[l]}</option>' for l in LANGS)
+    short = {"zh-CN": "ZH", "zh-TW": "ZH-TW"}
+    opts = "".join(f'<option value="{l}" lang="{l}" title="{names[l]}">{short.get(l, l.upper())}</option>' for l in LANGS)
     lang_select = (f'<label class="sr" for="lang-select">Translate this page</label>'
                    f'<select id="lang-select" class="lang-select notranslate" translate="no">{opts}</select>')
     nav_html = "\n          ".join(nav)
     full_title = SITE if not title else f"{title} | {SITE}"
     script = f'\n<script src="{pre}assets/forms.js" defer></script>' if forms else ""
-    related = "".join(f'<li><a href="{u}">{n}</a></li>' for n, u in FOOTER_RELATED)
-    state = "".join(f'<li><a href="{u.replace("{home}", home)}">{n}</a></li>' for n, u in FOOTER_STATE)
     html = f"""<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -71,7 +56,7 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;800&family=Montserrat:wght@400;500;700;800&display=swap">
-<link rel="icon" type="image/svg+xml" href="{pre}assets/favicon.svg">
+<link rel="icon" type="image/svg+xml" href="{pre}assets/logo-on-white.svg">
 <link rel="stylesheet" href="{pre}assets/site.css">
 <script src="{pre}assets/site.js" defer></script>{script}
 <script src="{pre}assets/translate.js" defer></script>
@@ -115,14 +100,13 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
       <p><a class="foot-cta" href="{pre}how-can-we-help/">How can we help you?</a></p>
     </div>
     <div>
-      <h2 class="foot-h">Public records</h2>
-      <ul><li><a href="{APRA}">APRA Request</a></li></ul>
       <h2 class="foot-h">Related sites</h2>
-      <ul>{related}</ul>
-    </div>
-    <div>
-      <h2 class="foot-h">State of Rhode Island</h2>
-      <ul>{state}</ul>
+      <ul>
+        <li><a href="https://www.employri.org/">RI Jobs</a></li>
+        <li><a href="https://www.ri.gov/">RI.gov</a></li>
+        <li><a href="https://www.ri.gov/guide/">State Agencies (A-Z)</a></li>
+        <li><a href="{APRA}">APRA Request</a></li>
+      </ul>
     </div>
     <div>
       <h2 class="foot-h">Follow</h2>
@@ -130,14 +114,11 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
         <li>Facebook <span class="ph">handle TBD</span></li>
         <li>Instagram <span class="ph">handle TBD</span></li>
         <li>X <span class="ph">handle TBD</span></li>
-        <li>Bluesky <span class="ph">handle TBD</span></li>
-        <li>YouTube <span class="ph">handle TBD</span></li>
       </ul>
     </div>
   </div>
   <div class="wrap foot-legal">
-    <p><a href="https://www.ri.gov/policies/">Accessibility, data, and privacy policies</a> · <a href="#main">Top of page</a></p>
-    <p>Prototype for review. Not an official State of Rhode Island website.</p>
+    <p><a href="https://www.ri.gov/policies/">Accessibility, data, and privacy policies</a></p>
   </div>
 </footer>
 </body>
@@ -275,7 +256,7 @@ def build():
       <h1>Let's get to work.</h1>
       <p class="lead">Governor Helena Foulkes and her team are here to make state government work for every Rhode Islander. Tell us what you need, share an idea, or join us.</p>
       <div class="hero-ctas">
-        <a class="btn btn-green" href="{{pre}}how-can-we-help/">How can we help you?</a>
+        <a class="btn btn-ghost" href="{{pre}}how-can-we-help/">How can we help you?</a>
         <a class="btn btn-ghost" href="{{pre}}get-involved/">Get involved</a>
       </div>
     </div>
@@ -309,13 +290,6 @@ def build():
   </div>
 </section>
 
-<section class="band" aria-labelledby="news-h">
-  <div class="wrap">
-    <h2 id="news-h">Latest news</h2>
-    <ul class="news-list">{news_cards}</ul>
-    <p><a class="more" href="{{pre}}news/">All news <span aria-hidden="true">&rarr;</span></a></p>
-  </div>
-</section>
 """, desc="Office of Governor Helena Foulkes. Let's get to work.")
 
     # ---- About ----
@@ -351,7 +325,7 @@ def build():
                              hint="Tell us what happened, which agency you've worked with, and any case or confirmation number. Please don't include your full Social Security number."),
                    ], submit="Send to the Governor's office",
                    intro="Tell us what's going on. Our Constituent Services team will look into it and get back to you.")
-    page("how-can-we-help/", "How can we help you", f"""
+    page("how-can-we-help/", "How Can We Help You", f"""
 <section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help you?</h1>
 <p class="lead">Our Constituent Services Office helps Rhode Islanders get answers from state government. Choose what you need below.</p></div></section>
 
