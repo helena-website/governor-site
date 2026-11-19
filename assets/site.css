@@ -30,39 +30,43 @@ p{margin:0 0 1em}
 /* prototype banner */
 .proto-banner{background:var(--warn-bg);color:var(--warn-fg);font-size:.9rem;padding:8px 0;border-bottom:2px solid var(--warn-fg)}
 
-/* header */
-.top{background:var(--blue);color:var(--white)}
-.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:76px}
-.brand{display:flex;align-items:center;gap:12px;color:var(--white);text-decoration:none}
+/* header: one blue row like helenatransition.com. Brand left, menu right. */
+.top{background:var(--blue);color:var(--white);position:relative;z-index:20}
+.top-row{display:flex;align-items:center;gap:12px;min-height:76px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--white);text-decoration:none;min-width:0;margin-right:auto}
 .brand:hover{color:var(--white)}
-.brand img{width:40px;height:auto;flex:none}
-.brand{gap:10px;min-width:0}
+.brand img{width:34px;height:auto;flex:none}
 .brand-text{display:flex;flex-direction:column;line-height:1.05}
-.brand-name{font-family:var(--display);font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em}
+.brand-name{font-family:var(--display);font-weight:800;font-size:.98rem;text-transform:uppercase;letter-spacing:.02em}
 .brand-sub{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--white)}
-.top-tools{display:flex;align-items:center;gap:10px}
-.lang-picker{display:flex;align-items:center;gap:6px}
-.lang-icon{font-size:1.1rem}
-.gtranslate_wrapper select{font:inherit;font-size:.85rem;padding:8px 6px;max-width:9.5rem;border:2px solid var(--white);background:var(--blue);color:var(--white);border-radius:0}
-.gtranslate_wrapper select option{color:var(--navy);background:var(--white)}
-.menu-btn{font:inherit;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--white);border:2px solid var(--white);padding:9px 14px;cursor:pointer;min-height:44px}
+.top-tools{display:flex;align-items:center;gap:8px;flex:none}
+.lang-select{font:inherit;font-size:.8rem;font-weight:700;padding:8px 4px;min-height:44px;width:6.4rem;border:2px solid var(--white);background:var(--blue);color:var(--white);border-radius:0;cursor:pointer}
+.lang-select option{color:var(--navy);background:var(--white)}
+.menu-btn{font:inherit;font-weight:800;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--white);border:2px solid var(--white);padding:9px 10px;cursor:pointer;min-height:44px}
 .menu-btn[aria-expanded="true"]{background:var(--white);color:var(--blue)}
-.site-nav{background:var(--navy);display:none}
+.site-nav{display:none;position:absolute;left:0;right:0;top:100%;background:var(--blue);border-top:1px solid rgba(255,255,255,.35);padding:4px 20px 16px}
 .site-nav.open{display:block}
-.site-nav ul{list-style:none;margin:0;padding:6px 0 12px}
-.site-nav a{display:block;color:var(--white);text-decoration:none;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.18)}
-.site-nav a[aria-current]{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:var(--green)}
-.no-js .site-nav{display:block}
-@media (min-width:900px){
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav a{display:block;color:var(--white);text-decoration:none;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.25)}
+.site-nav a[aria-current]{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:.3em}
+.site-nav a.nav-cta{display:inline-flex;margin-top:14px;padding:12px 20px;border:0;color:var(--navy)}
+.no-js .site-nav{display:block;position:static}
+@media (min-width:960px){
   .brand img{width:52px}
-  .brand-name{font-size:1.5rem}
+  .brand-name{font-size:1.4rem}
+  .lang-select{width:auto;max-width:9rem;font-size:.85rem;padding:8px 6px}
   .menu-btn{display:none}
-  .site-nav{display:block;background:var(--blue-dk)}
-  .site-nav ul{display:flex;gap:4px;padding:0}
-  .site-nav a{border:0;padding:14px 18px}
-  .site-nav a:hover{background:var(--navy)}
-  .site-nav li:first-child a{padding-left:0}
+  .site-nav{display:block;position:static;background:none;border:0;padding:0}
+  .site-nav ul{display:flex;align-items:center;gap:22px}
+  .site-nav a{border:0;padding:8px 0;font-weight:500;font-size:.95rem}
+  .site-nav a:hover{text-decoration:underline}
+  .site-nav a.nav-cta{margin:0;padding:12px 18px;font-weight:800;font-size:.8rem}
+  .site-nav a.nav-cta:hover{text-decoration:none}
 }
+/* hide Google Translate's own toolbar */
+.skiptranslate iframe,.goog-te-banner-frame,#goog-gt-tt{display:none!important}
+body{top:0!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--body);font-weight:800;text-transform:uppercase;font-size:.85rem;letter-spacing:.04em;padding:14px 24px;min-height:48px;border:0;border-radius:0;cursor:pointer;text-decoration:none;line-height:1.2;text-align:center}
@@ -79,7 +83,7 @@ p{margin:0 0 1em}
 .hero h1{color:var(--white);margin-bottom:.3em}
 .hero .lead{font-size:1.15rem;max-width:34rem}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 8px}
-.hero-photo{position:relative;margin:0;justify-self:center;max-width:300px}
+.hero-photo{margin:0;justify-self:center;max-width:300px}
 @media (min-width:900px){.hero-photo{max-width:420px}}
 .hero-photo img{width:100%}
 .ph-label{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;background:rgba(4,13,64,.82);color:var(--white);font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:12px 8px;font-size:.95rem}

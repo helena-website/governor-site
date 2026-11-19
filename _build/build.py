@@ -22,7 +22,7 @@ OFFICE = {
 # Languages offered by the current governor.ri.gov (GTranslate). English is the default.
 LANGS = ["en", "ar", "zh-CN", "zh-TW", "fr", "it", "pl", "pt", "es", "vi", "ht", "km"]
 
-NAV = [("about/", "About"), ("how-can-we-help/", "How can we help"), ("news/", "News"), ("get-involved/", "Get Involved")]
+NAV = [("about/", "About"), ("how-can-we-help/", "How can we help you"), ("news/", "News"), ("get-involved/", "Get Involved")]
 
 FOOTER_RELATED = [
     ("RI General Laws", "http://webserver.rilin.state.ri.us/Statutes/"),
@@ -48,13 +48,18 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
     nav = []
     for href, label in NAV:
         cur = ' aria-current="page"' if path.startswith(href) else ""
-        nav.append(f'<li><a href="{pre}{href}"{cur}>{label}</a></li>')
+        cls = ' class="btn btn-green nav-cta"' if href == "get-involved/" else ""
+        nav.append(f'<li><a{cls} href="{pre}{href}"{cur}>{label}</a></li>')
+    names = {"en": "English", "ar": "العربية", "zh-CN": "简体中文", "zh-TW": "繁體中文", "fr": "Français", "it": "Italiano",
+             "pl": "Polski", "pt": "Português", "es": "Español", "vi": "Tiếng Việt", "ht": "Kreyòl ayisyen", "km": "ភាសាខ្មែរ"}
+    opts = "".join(f'<option value="{l}" lang="{l}">{names[l]}</option>' for l in LANGS)
+    lang_select = (f'<label class="sr" for="lang-select">Translate this page</label>'
+                   f'<select id="lang-select" class="lang-select notranslate" translate="no">{opts}</select>')
     nav_html = "\n          ".join(nav)
     full_title = SITE if not title else f"{title} | {SITE}"
     script = f'\n<script src="{pre}assets/forms.js" defer></script>' if forms else ""
     related = "".join(f'<li><a href="{u}">{n}</a></li>' for n, u in FOOTER_RELATED)
     state = "".join(f'<li><a href="{u.replace("{home}", home)}">{n}</a></li>' for n, u in FOOTER_STATE)
-    langs = ",".join(f'"{l}"' for l in LANGS)
     html = f"""<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -69,8 +74,7 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
 <link rel="icon" type="image/svg+xml" href="{pre}assets/favicon.svg">
 <link rel="stylesheet" href="{pre}assets/site.css">
 <script src="{pre}assets/site.js" defer></script>{script}
-<script>window.gtranslateSettings={{"default_language":"en","native_language_names":true,"languages":[{langs}],"wrapper_selector":".gtranslate_wrapper","select_language_label":"Language"}}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+<script src="{pre}assets/translate.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
@@ -85,18 +89,17 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
       <img src="{pre}assets/logo-on-blue.svg" alt="" width="52" height="54">
       <span class="brand-text"><span class="brand-name">Governor Helena Foulkes</span><span class="brand-sub">State of Rhode Island</span></span>
     </a>
-    <div class="top-tools">
-      <div class="lang-picker" role="group" aria-label="Translate this page"><span class="lang-icon" aria-hidden="true">&#127760;</span><div class="gtranslate_wrapper"></div></div>
-      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
-    </div>
-  </div>
-  <nav id="site-nav" class="site-nav" aria-label="Main">
-    <div class="wrap">
+    <nav id="site-nav" class="site-nav" aria-label="Main">
       <ul>
           {nav_html}
       </ul>
+    </nav>
+    <div class="top-tools">
+      {lang_select}
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     </div>
-  </nav>
+  </div>
+  <div id="google_translate_element" hidden></div>
 </header>
 
 <main id="main" tabindex="-1">
@@ -109,7 +112,7 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
       <img src="{pre}assets/logo-on-blue.svg" alt="" width="64" height="66">
       <p class="foot-office">{"<br>".join(OFFICE["addr"])}</p>
       <p>Phone: <a href="{OFFICE["phone_href"]}">{OFFICE["phone"]}</a><br>Fax: {OFFICE["fax"]}</p>
-      <p><a class="foot-cta" href="{pre}how-can-we-help/">How can we help?</a></p>
+      <p><a class="foot-cta" href="{pre}how-can-we-help/">How can we help you?</a></p>
     </div>
     <div>
       <h2 class="foot-h">Public records</h2>
@@ -272,24 +275,23 @@ def build():
       <h1>Let's get to work.</h1>
       <p class="lead">Governor Helena Foulkes and her team are here to make state government work for every Rhode Islander. Tell us what you need, share an idea, or join us.</p>
       <div class="hero-ctas">
-        <a class="btn btn-green" href="{{pre}}how-can-we-help/">How can we help?</a>
+        <a class="btn btn-green" href="{{pre}}how-can-we-help/">How can we help you?</a>
         <a class="btn btn-ghost" href="{{pre}}get-involved/">Get involved</a>
       </div>
     </div>
     <figure class="hero-photo">
-      <img src="{{pre}}assets/img/hero-placeholder.webp" alt="Placeholder photo of Governor Helena Foulkes" width="665" height="900">
-      <figcaption class="ph-label">Placeholder photo</figcaption>
+      <img src="{{pre}}assets/img/hero-placeholder.webp" alt="Governor Helena Foulkes" width="665" height="900">
     </figure>
   </div>
 </section>
 
 <section class="band" aria-labelledby="help-h">
   <div class="wrap">
-    <h2 id="help-h">How can we help?</h2>
-    <p class="lead-sm">Having trouble with a state agency, or want the Governor at your event? Start here.</p>
+    <h2 id="help-h">How can we help you?</h2>
+    <p class="lead-sm">Have a problem, or want the Governor at your event? Start here.</p>
     <div class="cards">
-      {card("{pre}how-can-we-help/#problem", "I have a problem", "Stuck with a state agency? Tell us what's going on and we'll get back to you.", "Get help")}
-      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Send an invite")}
+      {card("{pre}how-can-we-help/#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Get help")}
+      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
       {card("{pre}how-can-we-help/#find-help", "Find state services", "Quick links to unemployment, SNAP, the DMV, housing help and more.", "See services")}
     </div>
   </div>
@@ -301,8 +303,8 @@ def build():
     <p class="lead-sm">Rhode Island works better when more of us pitch in.</p>
     <div class="cards">
       {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us.", "Share your idea")}
-      {card("{pre}get-involved/join-the-team/", "Be part of the team", "See open positions in the Governor's Office or send a general inquiry.", "Learn more")}
-      {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Apply")}
+      {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more")}
+      {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more")}
     </div>
   </div>
 </section>
@@ -349,15 +351,15 @@ def build():
                              hint="Tell us what happened, which agency you've worked with, and any case or confirmation number. Please don't include your full Social Security number."),
                    ], submit="Send to the Governor's office",
                    intro="Tell us what's going on. Our Constituent Services team will look into it and get back to you.")
-    page("how-can-we-help/", "How can we help", f"""
-<section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help?</h1>
+    page("how-can-we-help/", "How can we help you", f"""
+<section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help you?</h1>
 <p class="lead">Our Constituent Services Office helps Rhode Islanders get answers from state government. Choose what you need below.</p></div></section>
 
 <section class="band" aria-labelledby="choose-h"><div class="wrap">
   <h2 id="choose-h" class="sr">Choose what you need</h2>
   <div class="cards">
-    {card("#problem", "I have a problem", "Stuck with a state agency? Tell us and we'll get back to you.", "Tell us")}
-    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Send an invite")}
+    {card("#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Tell us")}
+    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
     {card("#find-help", "Find state services", "Quick links to the most-requested state services.", "See services")}
   </div>
 </div></section>
@@ -406,7 +408,7 @@ def build():
                    field("attach", "Attachments", "file", full=True, multiple=True, hint="Invitation, agenda or program, if you have them."),
                    ], submit="Send the invitation")
     page("how-can-we-help/invite-the-governor/", "Invite the Governor", f"""
-<section class="page-head"><div class="wrap"><p class="eyebrow"><a href="{{pre}}how-can-we-help/">How can we help</a></p><h1>Invite the Governor</h1>
+<section class="page-head"><div class="wrap"><p class="eyebrow"><a href="{{pre}}how-can-we-help/">How can we help you</a></p><h1>Invite the Governor</h1>
 <p class="lead">Ask Governor Foulkes to attend or speak at your event. Please send requests 4 to 6 weeks ahead, one request per event.</p></div></section>
 <section class="band"><div class="wrap narrow">
   {invite}
@@ -446,8 +448,8 @@ def build():
   <h2 id="ways-h" class="sr">Ways to get involved</h2>
   <div class="cards">
     {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us the problem and your idea.", "Share your idea")}
-    {card("{pre}get-involved/join-the-team/", "Be part of the team", "See open positions in the Governor's Office or send a general inquiry with your resume.", "Learn more")}
-    {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Apply")}
+    {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more")}
+    {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more")}
   </div>
 </div></section>
 """, desc="Get involved with the Office of Governor Helena Foulkes.")
@@ -501,7 +503,7 @@ def build():
     # ---- 404 (absolute links, since it can be served at any depth) ----
     page("404/", "Page not found", """
 <section class="page-head"><div class="wrap"><h1>Page not found</h1>
-<p class="lead">That page isn't here. Try the <a href="{home}">home page</a> or <a href="{pre}how-can-we-help/">How can we help</a>.</p></div></section>
+<p class="lead">That page isn't here. Try the <a href="{home}">home page</a> or <a href="{pre}how-can-we-help/">How can we help you</a>.</p></div></section>
 """, pre="/governor-site/", out_file="404.html")
 
 if __name__ == "__main__":

@@ -12,8 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
-<script>window.gtranslateSettings={"default_language":"en","native_language_names":true,"languages":["en","ar","zh-CN","zh-TW","fr","it","pl","pt","es","vi","ht","km"],"wrapper_selector":".gtranslate_wrapper","select_language_label":"Language"}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+<script src="assets/translate.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
@@ -28,21 +27,20 @@
       <img src="assets/logo-on-blue.svg" alt="" width="52" height="54">
       <span class="brand-text"><span class="brand-name">Governor Helena Foulkes</span><span class="brand-sub">State of Rhode Island</span></span>
     </a>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+          <li><a href="about/">About</a></li>
+          <li><a href="how-can-we-help/">How can we help you</a></li>
+          <li><a href="news/">News</a></li>
+          <li><a class="btn btn-green nav-cta" href="get-involved/">Get Involved</a></li>
+      </ul>
+    </nav>
     <div class="top-tools">
-      <div class="lang-picker" role="group" aria-label="Translate this page"><span class="lang-icon" aria-hidden="true">&#127760;</span><div class="gtranslate_wrapper"></div></div>
+      <label class="sr" for="lang-select">Translate this page</label><select id="lang-select" class="lang-select notranslate" translate="no"><option value="en" lang="en">English</option><option value="ar" lang="ar">العربية</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="zh-TW" lang="zh-TW">繁體中文</option><option value="fr" lang="fr">Français</option><option value="it" lang="it">Italiano</option><option value="pl" lang="pl">Polski</option><option value="pt" lang="pt">Português</option><option value="es" lang="es">Español</option><option value="vi" lang="vi">Tiếng Việt</option><option value="ht" lang="ht">Kreyòl ayisyen</option><option value="km" lang="km">ភាសាខ្មែរ</option></select>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     </div>
   </div>
-  <nav id="site-nav" class="site-nav" aria-label="Main">
-    <div class="wrap">
-      <ul>
-          <li><a href="about/">About</a></li>
-          <li><a href="how-can-we-help/">How can we help</a></li>
-          <li><a href="news/">News</a></li>
-          <li><a href="get-involved/">Get Involved</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div id="google_translate_element" hidden></div>
 </header>
 
 <main id="main" tabindex="-1">
@@ -53,24 +51,23 @@
       <h1>Let's get to work.</h1>
       <p class="lead">Governor Helena Foulkes and her team are here to make state government work for every Rhode Islander. Tell us what you need, share an idea, or join us.</p>
       <div class="hero-ctas">
-        <a class="btn btn-green" href="how-can-we-help/">How can we help?</a>
+        <a class="btn btn-green" href="how-can-we-help/">How can we help you?</a>
         <a class="btn btn-ghost" href="get-involved/">Get involved</a>
       </div>
     </div>
     <figure class="hero-photo">
-      <img src="assets/img/hero-placeholder.webp" alt="Placeholder photo of Governor Helena Foulkes" width="665" height="900">
-      <figcaption class="ph-label">Placeholder photo</figcaption>
+      <img src="assets/img/hero-placeholder.webp" alt="Governor Helena Foulkes" width="665" height="900">
     </figure>
   </div>
 </section>
 
 <section class="band" aria-labelledby="help-h">
   <div class="wrap">
-    <h2 id="help-h">How can we help?</h2>
-    <p class="lead-sm">Having trouble with a state agency, or want the Governor at your event? Start here.</p>
+    <h2 id="help-h">How can we help you?</h2>
+    <p class="lead-sm">Have a problem, or want the Governor at your event? Start here.</p>
     <div class="cards">
-      <a class="card" href="how-can-we-help/#problem"><h3>I have a problem</h3><p>Stuck with a state agency? Tell us what's going on and we'll get back to you.</p><span class="card-cta">Get help <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="card" href="how-can-we-help/invite-the-governor/"><h3>Invite the Governor</h3><p>Ask the Governor to attend or speak at your event.</p><span class="card-cta">Send an invite <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="how-can-we-help/#problem"><h3>I have a problem</h3><p>Call or let us know what's going on and we'll get back to you.</p><span class="card-cta">Get help <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="how-can-we-help/invite-the-governor/"><h3>Invite the Governor</h3><p>Ask the Governor to attend or speak at your event.</p><span class="card-cta">Request the Governor <span aria-hidden="true">&rarr;</span></span></a>
       <a class="card" href="how-can-we-help/#find-help"><h3>Find state services</h3><p>Quick links to unemployment, SNAP, the DMV, housing help and more.</p><span class="card-cta">See services <span aria-hidden="true">&rarr;</span></span></a>
     </div>
   </div>
@@ -82,8 +79,8 @@
     <p class="lead-sm">Rhode Island works better when more of us pitch in.</p>
     <div class="cards">
       <a class="card" href="get-involved/share-an-idea/"><h3>Share an idea</h3><p>What could the state fix or do better? Tell us.</p><span class="card-cta">Share your idea <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="card" href="get-involved/join-the-team/"><h3>Be part of the team</h3><p>See open positions in the Governor's Office or send a general inquiry.</p><span class="card-cta">Learn more <span aria-hidden="true">&rarr;</span></span></a>
-      <a class="card" href="get-involved/boards-and-commissions/"><h3>Join a board or commission</h3><p>Serve your community on one of the state's boards or commissions.</p><span class="card-cta">Apply <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="get-involved/join-the-team/"><h3>Be part of the team</h3><p>Interested in a role in a state agency or the Governor's Office?</p><span class="card-cta">Learn more <span aria-hidden="true">&rarr;</span></span></a>
+      <a class="card" href="get-involved/boards-and-commissions/"><h3>Join a board or commission</h3><p>Serve your community on one of the state's boards or commissions.</p><span class="card-cta">Learn more <span aria-hidden="true">&rarr;</span></span></a>
     </div>
   </div>
 </section>
@@ -104,7 +101,7 @@
       <img src="assets/logo-on-blue.svg" alt="" width="64" height="66">
       <p class="foot-office">Office of the Governor<br>82 Smith Street<br>Providence, RI 02903</p>
       <p>Phone: <a href="tel:+14012222080">(401) 222-2080</a><br>Fax: (401) 222-8096</p>
-      <p><a class="foot-cta" href="how-can-we-help/">How can we help?</a></p>
+      <p><a class="foot-cta" href="how-can-we-help/">How can we help you?</a></p>
     </div>
     <div>
       <h2 class="foot-h">Public records</h2>

@@ -13,8 +13,7 @@
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 <script src="../../assets/forms.js" defer></script>
-<script>window.gtranslateSettings={"default_language":"en","native_language_names":true,"languages":["en","ar","zh-CN","zh-TW","fr","it","pl","pt","es","vi","ht","km"],"wrapper_selector":".gtranslate_wrapper","select_language_label":"Language"}</script>
-<script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer></script>
+<script src="../../assets/translate.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
@@ -29,21 +28,20 @@
       <img src="../../assets/logo-on-blue.svg" alt="" width="52" height="54">
       <span class="brand-text"><span class="brand-name">Governor Helena Foulkes</span><span class="brand-sub">State of Rhode Island</span></span>
     </a>
+    <nav id="site-nav" class="site-nav" aria-label="Main">
+      <ul>
+          <li><a href="../../about/">About</a></li>
+          <li><a href="../../how-can-we-help/">How can we help you</a></li>
+          <li><a href="../../news/">News</a></li>
+          <li><a class="btn btn-green nav-cta" href="../../get-involved/" aria-current="page">Get Involved</a></li>
+      </ul>
+    </nav>
     <div class="top-tools">
-      <div class="lang-picker" role="group" aria-label="Translate this page"><span class="lang-icon" aria-hidden="true">&#127760;</span><div class="gtranslate_wrapper"></div></div>
+      <label class="sr" for="lang-select">Translate this page</label><select id="lang-select" class="lang-select notranslate" translate="no"><option value="en" lang="en">English</option><option value="ar" lang="ar">العربية</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="zh-TW" lang="zh-TW">繁體中文</option><option value="fr" lang="fr">Français</option><option value="it" lang="it">Italiano</option><option value="pl" lang="pl">Polski</option><option value="pt" lang="pt">Português</option><option value="es" lang="es">Español</option><option value="vi" lang="vi">Tiếng Việt</option><option value="ht" lang="ht">Kreyòl ayisyen</option><option value="km" lang="km">ភាសាខ្មែរ</option></select>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     </div>
   </div>
-  <nav id="site-nav" class="site-nav" aria-label="Main">
-    <div class="wrap">
-      <ul>
-          <li><a href="../../about/">About</a></li>
-          <li><a href="../../how-can-we-help/">How can we help</a></li>
-          <li><a href="../../news/">News</a></li>
-          <li><a href="../../get-involved/" aria-current="page">Get Involved</a></li>
-      </ul>
-    </div>
-  </nav>
+  <div id="google_translate_element" hidden></div>
 </header>
 
 <main id="main" tabindex="-1">
@@ -83,7 +81,7 @@
       <img src="../../assets/logo-on-blue.svg" alt="" width="64" height="66">
       <p class="foot-office">Office of the Governor<br>82 Smith Street<br>Providence, RI 02903</p>
       <p>Phone: <a href="tel:+14012222080">(401) 222-2080</a><br>Fax: (401) 222-8096</p>
-      <p><a class="foot-cta" href="../../how-can-we-help/">How can we help?</a></p>
+      <p><a class="foot-cta" href="../../how-can-we-help/">How can we help you?</a></p>
     </div>
     <div>
       <h2 class="foot-h">Public records</h2>

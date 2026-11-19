@@ -20,7 +20,7 @@ A working prototype of the updated Office of the Governor website (today's https
 |---|---|---|
 | Home | `/` | Hero ("Let's get to work"), How can we help, Get involved, latest news |
 | About | `/about/` | Governor bio and office address |
-| How can we help | `/how-can-we-help/` | "Have a problem" form, phone option, state services quick links, citations/proclamations, preferred license plate |
+| How can we help you | `/how-can-we-help/` | "Have a problem" form, phone option, state services quick links, citations/proclamations, preferred license plate |
 | Invite the Governor | `/how-can-we-help/invite-the-governor/` | Web form replacing today's downloadable PDF |
 | News | `/news/` | Press releases plus links to the live executive order and legislative message archives |
 | Sample release | `/news/sample-release/` | Layout sample, placeholder text |
@@ -33,9 +33,10 @@ A working prototype of the updated Office of the Governor website (today's https
 
 | Today | New |
 |---|---|
-| Home, About, Accomplishments, Budget, Newsroom, Constituent Services, Data Dashboards, Learn365RI, Contact | About, How can we help, News, Get Involved |
+| Home, About, Accomplishments, Budget, Newsroom, Constituent Services, Data Dashboards, Learn365RI, Contact | About, How can we help you, News, Get Involved (green button) |
 
-- **Removed:** Accomplishments, Budget, Contact (folded into How can we help), Data Dashboards, Learn365RI.
+- **Removed:** Accomplishments, Budget, Contact (folded into How can we help you), Data Dashboards, Learn365RI.
+- **Header:** one blue row, like helenatransition.com: logo, menu, language picker. On phones the menu opens below the header.
 - **Footer:** keeps every current footer link, plus the APRA request link.
 
 ## Forms
@@ -74,7 +75,7 @@ Square corners throughout. Contrast ratios are listed at the top of `assets/site
 
 ## Translation
 
-Same approach and languages as today's site: the GTranslate widget (Google Translate) in the header. Languages: English, Arabic, Chinese (Simplified), Chinese (Traditional), French, Italian, Polish, Portuguese, Spanish, Vietnamese, Haitian Creole, Khmer. Settings are in the `<head>` of every page (`window.gtranslateSettings`). Machine translation: production should add human-reviewed Spanish for the top tasks.
+Same machine translation and languages as today's site (Google Translate, which today's GTranslate widget wraps), behind a plain `<select>` in the header that defaults to English. Languages: English, Arabic, Chinese (Simplified), Chinese (Traditional), French, Italian, Polish, Portuguese, Spanish, Vietnamese, Haitian Creole, Khmer. Logic is in `assets/translate.js`: choosing a language sets Google's `googtrans` cookie and reloads; English clears it. Production should add human-reviewed Spanish for the top tasks.
 
 ## Accessibility
 
@@ -86,7 +87,7 @@ Checked with axe-core (WCAG 2.0/2.1 A and AA plus best practices) on every page 
 
 ## Placeholders
 
-Marked in yellow on the page: hero and About photos, social handles, response-time promise, open positions list, boards list, HR address, press contact and the sample release.
+Marked in yellow on the page: the About photo, social handles, response-time promise, open positions list, boards list, HR address, press contact and the sample release.
 
 ## Phase 2 ideas
 
@@ -105,4 +106,4 @@ python3 _build/logo.py    # only if the logo changes
 python3 _build/build.py   # writes every page into the repo root
 ```
 
-Edit page content in `_build/build.py`, styles in `assets/site.css`. GitHub Pages serves `main` from the repo root; folders starting with `_` are not published.
+Edit page content in `_build/build.py`, styles in `assets/site.css`. GitHub Pages serves `main` from the repo root as plain files (`.nojekyll`). The hero photo is the transition site photo; the team will decide on a new one.
