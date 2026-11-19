@@ -22,8 +22,8 @@ A working prototype of the updated Office of the Governor website (today's https
 | About | `/about/` | Governor bio, two photos (with Bill; at a park), office address |
 | How can we help you | `/how-can-we-help/` | Call us box (8am-5pm weekdays), "Have a problem" form, state services quick links |
 | Invite the Governor | `/how-can-we-help/invite-the-governor/` | Web form replacing today's downloadable PDF |
-| News | `/news/` | Press releases plus links to the live executive order and legislative message archives |
-| Sample release | `/news/sample-release/` | Layout sample, placeholder text |
+| News | `/news/` | "From the Office of the Governor": one list of press releases, executive orders and legislative transmittal messages, each tagged with its type |
+| Samples | `/news/sample-press-release/`, `/news/sample-executive-order/`, `/news/sample-transmittal-message/` | Layout samples, placeholder text |
 | Get Involved | `/get-involved/` | Three paths below |
 | Share an idea | `/get-involved/share-an-idea/` | Modeled on the transition site's form |
 | Be part of the team | `/get-involved/join-the-team/` | Open positions and general HR inquiries, with resume |
@@ -88,7 +88,7 @@ Checked with axe-core (WCAG 2.0/2.1 A and AA plus best practices) on every page 
 
 ## Placeholders
 
-Marked in yellow on the page: the bio update, social handles, response-time promise, open positions list, boards list, HR address, press contact and the sample release.
+Marked in yellow on the page: the bio update, social handles, response-time promise, open positions list, boards list, HR address, press contact and the three sample news items.
 
 ## Phase 2 ideas
 

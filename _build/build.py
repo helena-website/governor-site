@@ -236,18 +236,26 @@ PROBLEM_TOPICS = ["Food, health coverage or family support (DHS / SNAP)", "Unemp
                   "Housing", "Health (DOH)", "Child support", "Veterans", "Older Rhode Islanders", "Citation or proclamation request", "Something else"]
 
 NEWS = [
-    {"slug": "sample-release", "date": "Jan 5, 2027", "title": "Sample release: headline goes here",
-     "summary": "Placeholder text. This sample shows how a press release page looks on the new site.",
-     "body": ["<span class=\"ph\">Placeholder text.</span> This is a sample press release so reviewers can see the layout. It is not a real announcement.",
+    {"slug": "sample-press-release", "type": "Press Release", "date": "Jan 5, 2027", "title": "Sample press release: headline goes here",
+     "summary": "Placeholder text. Shows how a press release looks on the new site.",
+     "body": ['<span class="ph">Placeholder text.</span> This is a sample press release so reviewers can see the layout. It is not a real announcement.',
               "Releases open with a dateline and a short summary, then the full text. Each release can include a quote, links and contact details for the press office.",
               "For press inquiries, contact the Governor's Communications Office. <span class=\"ph\">Press contact TBD</span>"]},
+    {"slug": "sample-executive-order", "type": "Executive Order", "date": "Jan 5, 2027", "title": "Sample executive order: title goes here",
+     "summary": "Placeholder text. Shows how an executive order looks on the new site.",
+     "body": ['<span class="ph">Placeholder text.</span> This is a sample executive order page so reviewers can see the layout. It is not a real order.',
+              'Each order shows its number, title and date, a short plain-language summary, and a link to the signed PDF. <span class="ph">Order number and PDF TBD</span>']},
+    {"slug": "sample-transmittal-message", "type": "Legislative Transmittal Message", "date": "Jan 5, 2027", "title": "Sample transmittal message: bill number and title",
+     "summary": "Placeholder text. Shows how a legislative transmittal message looks on the new site.",
+     "body": ['<span class="ph">Placeholder text.</span> This is a sample legislative transmittal message so reviewers can see the layout. It is not a real message.',
+              "Each message names the bill, the Governor's action and the date, with a link to the signed letter. <span class=\"ph\">Bill and PDF TBD</span>"]},
 ]
 
 
 def build():
     # ---- Home ----
     news_cards = "".join(
-        f'<li class="news-item"><p class="news-date">{n["date"]}</p><h3><a href="{{pre}}news/{n["slug"]}/">{n["title"]}</a></h3><p>{n["summary"]}</p></li>'
+        f'<li class="news-row"><span class="news-type">{n["type"]}</span><a href="{{pre}}news/{n["slug"]}/">{n["title"]}</a><span class="news-date">{n["date"]}</span></li>'
         for n in NEWS)
     page("", "", f"""
 <section class="hero">
@@ -328,14 +336,14 @@ def build():
                    intro="Tell us what's going on. We will look into it and get back to you.")
     page("how-can-we-help/", "How Can We Help You", f"""
 <section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help you?</h1>
-<p class="lead">Our Constituent Services Office is here to serve all Rhode Islanders from state government. Choose what you need below.</p></div></section>
+<p class="lead">Our Constituent Services Office is here to serve all Rhode Islanders. Choose what you need below.</p></div></section>
 
 <section class="band" aria-labelledby="choose-h"><div class="wrap">
   <h2 id="choose-h" class="sr">Choose what you need</h2>
   <div class="cards">
     {card("#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Tell us")}
-    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
     {card("#find-help", "Find state services", "Quick links to the most-requested state services.", "See services")}
+    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
   </div>
 </div></section>
 
@@ -385,30 +393,23 @@ def build():
 
     # ---- News ----
     page("news/", "News", f"""
-<section class="page-head"><div class="wrap"><p class="eyebrow">Newsroom</p><h1>News</h1>
-<p class="lead">Press releases and announcements from the Office of the Governor.</p></div></section>
+<section class="page-head"><div class="wrap"><p class="eyebrow">News</p><h1>From the Office of the Governor</h1>
+<p class="lead">Press Releases, Executive Orders, and Legislative Transmittal Messages</p></div></section>
 <section class="band"><div class="wrap">
-  <h2>Press releases</h2>
-  <ul class="news-list">{news_cards}</ul>
-  <h2>Official actions</h2>
-  <ul class="link-list cols">
-    <li><a href="https://governor.ri.gov/executive-orders">Executive orders</a></li>
-    <li><a href="https://governor.ri.gov/executive-order-archive">Executive order archive</a></li>
-    <li><a href="https://governor.ri.gov/newsroom/legislative-transmittal-messages">Legislative transmittal messages</a></li>
-    <li><a href="https://governor.ri.gov/press-releases">Press release archive</a></li>
-  </ul>
+  <h2 class="sr">Latest</h2>
+  <ul class="news-rows">{news_cards}</ul>
 </div></section>
 """, desc="News from the Office of Governor Helena Foulkes.")
     for n in NEWS:
         paras = "".join(f"<p>{p}</p>" for p in n["body"])
         page(f'news/{n["slug"]}/', n["title"], f"""
-<section class="page-head"><div class="wrap"><p class="eyebrow"><a href="{{pre}}news/">News</a></p><h1>{n["title"]}</h1><p class="news-date">{n["date"]}</p></div></section>
+<section class="page-head"><div class="wrap"><p class="eyebrow"><a href="{{pre}}news/">News</a> · {n["type"]}</p><h1>{n["title"]}</h1><p class="news-date">{n["date"]}</p></div></section>
 <section class="band"><div class="wrap narrow prose">{paras}<p><a class="more" href="{{pre}}news/">All news</a></p></div></section>
 """, desc=n["summary"])
 
     # ---- Get involved ----
     page("get-involved/", "Get Involved", f"""
-<section class="page-head"><div class="wrap"><p class="eyebrow">Get involved</p><h1>Raise your hand</h1>
+<section class="page-head"><div class="wrap"><p class="eyebrow">Get involved</p><h1>Rhode Island works better when more of us pitch in.</h1>
 <p class="lead">Share an idea, join the team, or serve on a board or commission.</p></div></section>
 <section class="band" aria-labelledby="ways-h"><div class="wrap">
   <h2 id="ways-h" class="sr">Ways to get involved</h2>

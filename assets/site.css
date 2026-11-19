@@ -120,6 +120,12 @@ a.card:hover{border-color:var(--blue)}
 .news-item h3{margin:.1em 0 .3em}
 .news-date{font-weight:700;color:var(--muted);font-size:.9rem;margin:0}
 .page-head .news-date{color:var(--white)}
+.news-rows{list-style:none;padding:0;margin:0}
+.news-row{display:grid;gap:4px;padding:16px 0;border-bottom:2px solid var(--lav)}
+.news-row a{font-weight:700;font-size:1.1rem}
+.news-type{justify-self:start;background:var(--lav);color:var(--navy);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px}
+.news-row .news-date{font-weight:500;color:var(--muted);font-size:.9rem}
+@media (min-width:800px){.news-row{grid-template-columns:19rem 1fr auto;align-items:center;gap:20px}}
 .more{font-weight:800;text-transform:uppercase;font-size:.9rem}
 .link-list{list-style:none;padding:0;margin:0}
 .link-list li{padding:8px 0;border-bottom:1px solid var(--lav)}
