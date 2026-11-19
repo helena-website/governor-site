@@ -127,7 +127,7 @@ a.card:hover{border-color:var(--blue)}
 
 /* about */
 .about-grid{display:grid;gap:28px}
-.about-photo{position:relative;margin:0}
+.about-photos{display:grid;gap:16px}
 @media (min-width:900px){.about-grid{grid-template-columns:1fr 1.2fr;align-items:start}}
 
 /* accordions */
@@ -140,8 +140,7 @@ a.card:hover{border-color:var(--blue)}
 .acc .link-list{padding:0 0 16px}
 
 /* forms */
-.call-box{background:var(--white);border-left:6px solid var(--green);padding:18px 22px;margin:0 0 28px}
-.call-box h2{font-size:1.5rem}
+.call-box{background:var(--white);border:2px solid var(--lav);padding:22px;margin:0 0 28px}
 .form-wrap{background:var(--white);border:2px solid var(--lav);padding:22px;margin:0 0 28px}
 .proto-note{background:var(--warn-bg);color:var(--warn-fg);padding:10px 12px;font-size:.92rem}
 .req{color:var(--err);font-weight:800}

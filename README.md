@@ -19,8 +19,8 @@ A working prototype of the updated Office of the Governor website (today's https
 | Page | Path | Notes |
 |---|---|---|
 | Home | `/` | Hero ("Let's get to work"), How can we help you, Get involved |
-| About | `/about/` | Governor bio and office address |
-| How can we help you | `/how-can-we-help/` | "Have a problem" form, phone option, state services quick links, citations/proclamations, preferred license plate |
+| About | `/about/` | Governor bio, two photos (with Bill; at a park), office address |
+| How can we help you | `/how-can-we-help/` | Call us box (8am-5pm weekdays), "Have a problem" form, state services quick links |
 | Invite the Governor | `/how-can-we-help/invite-the-governor/` | Web form replacing today's downloadable PDF |
 | News | `/news/` | Press releases plus links to the live executive order and legislative message archives |
 | Sample release | `/news/sample-release/` | Layout sample, placeholder text |
@@ -52,7 +52,7 @@ All forms validate required fields, show an error summary that links to each fie
 | Be part of the team | Name, email, phone, town, interest, position title, resume (required), note | Governor's Office HR inbox (hr@, address TBD) |
 | Join a board or commission | Name, email, phone, town, boards of interest, why, resume (required) | Boards and Commissions Director |
 
-The "Have a problem" topic list includes "Citation or proclamation request", matching how today's site handles commemorative documents.
+The "Have a problem" topic list still includes "Citation or proclamation request", matching how today's site handles commemorative documents. The separate citations and preferred license plate boxes were removed in review (today's pages: governor.ri.gov/constituent-services).
 
 ## Design tokens
 
@@ -88,7 +88,7 @@ Checked with axe-core (WCAG 2.0/2.1 A and AA plus best practices) on every page 
 
 ## Placeholders
 
-Marked in yellow on the page: the About photo, social handles, response-time promise, open positions list, boards list, HR address, press contact and the sample release.
+Marked in yellow on the page: the bio update, social handles, response-time promise, open positions list, boards list, HR address, press contact and the sample release.
 
 ## Phase 2 ideas
 

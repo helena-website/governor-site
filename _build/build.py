@@ -294,14 +294,15 @@ def build():
 
     # ---- About ----
     page("about/", "About", """
-<section class="page-head"><div class="wrap"><p class="eyebrow">About</p><h1>Governor Helena Foulkes</h1></div></section>
+<section class="page-head"><div class="wrap"><p class="eyebrow">About</p><h1>Governor Helena Foulkes</h1>
+<p class="lead">Governor Helena Foulkes and her team are here to make state government work for every Rhode Islander.</p></div></section>
 <section class="band"><div class="wrap about-grid">
-  <figure class="about-photo">
-    <img src="{pre}assets/img/about-placeholder.webp" alt="Placeholder photo of Governor Foulkes talking with a family at a park" width="1000" height="667">
-    <figcaption class="ph-label">Placeholder photo</figcaption>
-  </figure>
+  <div class="about-photos">
+    <img src="{pre}assets/img/about-family.webp" alt="Governor Helena Foulkes with her husband, Bill" width="1000" height="620">
+    <img src="{pre}assets/img/about-placeholder.webp" alt="Governor Foulkes talking with a family at a park" width="1000" height="667">
+  </div>
   <div class="prose">
-    <p>Governor Helena Buonanno Foulkes is a lifelong Rhode Islander, wife of 36 years, mother of four, grandmother, and cancer survivor. She rose through the ranks of CVS over 25 years to become president of its retail division.</p>
+    <p>Governor Helena Foulkes is a lifelong Rhode Islander, wife of 36 years, mother of four, grandmother, and cancer survivor. She rose through the ranks of CVS over 25 years to become president of its retail division.</p>
     <p>As President of CVS Pharmacy, Helena worked to get consumers the lowest possible prescription drug prices. She removed tobacco products from the shelves, even though tobacco brought in $2 billion in revenue, because protecting people's health matters more than profits.</p>
     <p>Before taking office, Helena partnered with the mayor of Central Falls to improve its public schools, and fought homelessness and domestic violence as a board member and volunteer at nonprofits.</p>
     <p>As Governor, Helena is focused on making state government work for every Rhode Islander. <span class="ph">Bio to be updated</span></p>
@@ -324,10 +325,10 @@ def build():
                        field("message", "What's going on?", "textarea", req=True, full=True,
                              hint="Tell us what happened, which agency you've worked with, and any case or confirmation number. Please don't include your full Social Security number."),
                    ], submit="Send to the Governor's office",
-                   intro="Tell us what's going on. Our Constituent Services team will look into it and get back to you.")
+                   intro="Tell us what's going on. We will look into it and get back to you.")
     page("how-can-we-help/", "How Can We Help You", f"""
 <section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help you?</h1>
-<p class="lead">Our Constituent Services Office helps Rhode Islanders get answers from state government. Choose what you need below.</p></div></section>
+<p class="lead">Our Constituent Services Office is here to serve all Rhode Islanders from state government. Choose what you need below.</p></div></section>
 
 <section class="band" aria-labelledby="choose-h"><div class="wrap">
   <h2 id="choose-h" class="sr">Choose what you need</h2>
@@ -340,27 +341,18 @@ def build():
 
 <section class="band band-lav" id="problem"><div class="wrap narrow">
   <div class="call-box">
-    <h2>Prefer to call?</h2>
-    <p>Call the Office of the Governor at <a href="tel:+14012222080">(401) 222-2080</a>. We'll get back to you.</p>
+    <h2>Call us</h2>
+    <p>Call the Constituent Services at <a href="tel:+14012222080">(401) 222-2080</a>. We're available 8am-5pm Monday through Friday. We'll get back to you if we miss your call.</p>
   </div>
   {problem}
 </div></section>
 
 <section class="band" id="find-help" aria-labelledby="find-h"><div class="wrap narrow">
   <h2 id="find-h">Find state services</h2>
-  <p class="lead-sm">Many questions are fastest to solve with the agency directly. If you're stuck, <a href="#problem">tell us</a>.</p>
+  <p class="lead-sm">Many questions are fastest to solve with the agency directly.</p>
   {"".join(groups)}
 </div></section>
 
-<section class="band band-lav" aria-labelledby="more-h"><div class="wrap narrow">
-  <h2 id="more-h">Other requests</h2>
-  <div class="cards cards-2">
-    <div class="card card-static"><h3>Citations and proclamations</h3><p>Request a citation or proclamation for a person, group or event. Choose "Citation or proclamation request" in the form above.</p>
-      <p><a href="https://governor.ri.gov/sites/g/files/xkgbur236/files/2021-08/proclamation-and-citation-instructions.pdf">Guidelines for citations and proclamations (PDF)</a></p></div>
-    <div class="card card-static"><h3>Preferred license plate</h3><p>Apply for a Governor's preferred (low-number) license plate.</p>
-      <p><a href="https://governor.ri.gov/constituent-services/preferred-license-plate-request">Preferred license plate request</a></p></div>
-  </div>
-</div></section>
 """, desc="Get help from the Governor's Constituent Services Office.", forms=True)
 
     invite = form("invite-form", "Event request", "the Governor's Scheduling Office",
