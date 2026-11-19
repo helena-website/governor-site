@@ -120,12 +120,17 @@ a.card:hover{border-color:var(--blue)}
 .news-item h3{margin:.1em 0 .3em}
 .news-date{font-weight:700;color:var(--muted);font-size:.9rem;margin:0}
 .page-head .news-date{color:var(--white)}
-.news-rows{list-style:none;padding:0;margin:0}
-.news-row{display:grid;gap:4px;padding:16px 0;border-bottom:2px solid var(--lav)}
-.news-row a{font-weight:700;font-size:1.1rem}
-.news-type{justify-self:start;background:var(--lav);color:var(--navy);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px}
-.news-row .news-date{font-weight:500;color:var(--muted);font-size:.9rem}
-@media (min-width:800px){.news-row{grid-template-columns:19rem 1fr auto;align-items:center;gap:20px}}
+/* news list: same layout as helenatransition.com/news */
+.news{list-style:none;margin:0;padding:0}
+.news li{display:grid;grid-template-columns:160px 1fr;gap:28px;padding:24px 0;border-bottom:1px solid var(--lav)}
+.news li:first-child{border-top:1px solid var(--lav)}
+.news .when{font-family:var(--display);font-weight:800;font-size:1.25rem;text-transform:uppercase;color:var(--blue);line-height:1.15}
+.news .tag{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;background:#DAEBD6;color:var(--navy);padding:2px 8px;margin-bottom:8px}
+.news h3{font-family:var(--body);font-weight:800;font-size:1.2rem;line-height:1.35;margin-bottom:6px}
+.news h3 a{color:var(--navy);text-decoration:none}
+.news h3 a:hover{text-decoration:underline}
+.news p{margin:0;color:var(--muted)}
+@media (max-width:640px){.news li{grid-template-columns:1fr;gap:6px}}
 .more{font-weight:800;text-transform:uppercase;font-size:.9rem}
 .link-list{list-style:none;padding:0;margin:0}
 .link-list li{padding:8px 0;border-bottom:1px solid var(--lav)}

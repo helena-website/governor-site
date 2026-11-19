@@ -255,7 +255,7 @@ NEWS = [
 def build():
     # ---- Home ----
     news_cards = "".join(
-        f'<li class="news-row"><span class="news-type">{n["type"]}</span><a href="{{pre}}news/{n["slug"]}/">{n["title"]}</a><span class="news-date">{n["date"]}</span></li>'
+        f'<li><div class="when">{n["date"]}</div><div><span class="tag">{n["type"]}</span><h3><a href="{{pre}}news/{n["slug"]}/">{n["title"]}</a></h3><p>{n["summary"]}</p></div></li>'
         for n in NEWS)
     page("", "", f"""
 <section class="hero">
@@ -397,7 +397,7 @@ def build():
 <p class="lead">Press Releases, Executive Orders, and Legislative Transmittal Messages</p></div></section>
 <section class="band"><div class="wrap">
   <h2 class="sr">Latest</h2>
-  <ul class="news-rows">{news_cards}</ul>
+  <ul class="news">{news_cards}</ul>
 </div></section>
 """, desc="News from the Office of Governor Helena Foulkes.")
     for n in NEWS:
