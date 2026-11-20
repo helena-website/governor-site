@@ -76,7 +76,7 @@ Square corners throughout. Contrast ratios are listed at the top of `assets/site
 
 ## Translation
 
-Same machine translation as today's site (Google Translate, which today's GTranslate widget wraps), behind a compact `<select>` in the header showing language codes (EN, ES, FR...) that defaults to EN. Languages, in this order: English, Spanish, Portuguese, French, Haitian Creole, Chinese (Simplified), Italian, Arabic. Logic is in `assets/translate.js`: choosing a language sets Google's `googtrans` cookie and reloads; English clears it. Production should add human-reviewed Spanish for the top tasks.
+Same machine translation as today's site (Google Translate, which today's GTranslate widget wraps), behind a compact `<select>` in the header showing "Hello" in each language that defaults to English. Languages, in this order: English, Spanish, Portuguese, French, Haitian Creole, Chinese (Simplified), Italian, Arabic. Logic is in `assets/translate.js`: choosing a language sets Google's `googtrans` cookie and reloads; English clears it. Production should add human-reviewed Spanish for the top tasks.
 
 ## Accessibility
 
