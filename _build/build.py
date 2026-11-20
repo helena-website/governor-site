@@ -20,7 +20,7 @@ OFFICE = {
     "fax": "(401) 222-8096",
 }
 # Languages offered by the current governor.ri.gov (GTranslate). English is the default.
-LANGS = ["en", "ar", "zh-CN", "zh-TW", "fr", "it", "pl", "pt", "es", "vi", "ht", "km"]
+LANGS = ["en", "es", "pt", "fr", "ht", "zh-CN", "it", "ar"]
 
 NAV = [("about/", "About"), ("how-can-we-help/", "How can we help you"), ("get-involved/", "Get Involved"), ("news/", "News")]
 
@@ -36,10 +36,9 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
     for href, label in NAV:
         cur = ' aria-current="page"' if path.startswith(href) else ""
         nav.append(f'<li><a href="{pre}{href}"{cur}>{label}</a></li>')
-    names = {"en": "English", "ar": "العربية", "zh-CN": "简体中文", "zh-TW": "繁體中文", "fr": "Français", "it": "Italiano",
-             "pl": "Polski", "pt": "Português", "es": "Español", "vi": "Tiếng Việt", "ht": "Kreyòl ayisyen", "km": "ភាសាខ្មែរ"}
-    hello = {"en": "Hello", "ar": "مرحبا", "zh-CN": "你好 (简体)", "zh-TW": "你好 (繁體)", "fr": "Bonjour", "it": "Ciao", "pl": "Cześć",
-             "pt": "Olá", "es": "Hola", "vi": "Xin chào", "ht": "Bonjou", "km": "សួស្តី"}
+    names = {"en": "English", "es": "Spanish (Español)", "pt": "Portuguese (Português)", "fr": "French (Français)",
+             "ht": "Haitian Creole (Kreyòl ayisyen)", "zh-CN": "Chinese (中文)", "it": "Italian (Italiano)", "ar": "Arabic (العربية)"}
+    hello = {"en": "Hello", "es": "Hola", "pt": "Olá", "fr": "Bonjour", "ht": "Bonjou", "zh-CN": "你好", "it": "Ciao", "ar": "مرحبا"}
     opts = "".join(f'<option value="{l}" lang="{l}" title="{names[l]}">{hello[l]}</option>' for l in LANGS)
     lang_select = (f'<label class="sr" for="lang-select">Translate this page</label>'
                    f'<select id="lang-select" class="lang-select notranslate" translate="no">{opts}</select>')
@@ -95,14 +94,14 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
 <section class="need-help" id="need-help" aria-labelledby="need-help-h">
   <div class="wrap need-grid">
     <div>
-      <h2 id="need-help-h">Still need help?</h2>
+      <h2 id="need-help-h">Need help?</h2>
       <p>A real person on our Constituent Services team reads every message and answers every call.</p>
     </div>
-    <div class="need-actions">
+    <div class="need-call">
       <p class="need-phone">{icon("phone", "ico ico-sm")}<a href="{OFFICE["phone_href"]}">{OFFICE["phone"]}</a></p>
       <p>{HOURS}</p>
-      <a class="btn btn-blue" href="{pre}how-can-we-help/#problem">Tell us</a>
     </div>
+    <p class="need-tell"><a class="card-cta" href="{pre}how-can-we-help/#problem">Tell us <span aria-hidden="true">&rarr;</span></a></p>
   </div>
   <a class="help-fab" href="#need-help">Need help?</a>
 </section>
