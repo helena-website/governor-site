@@ -100,7 +100,7 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
     <div class="need-call">
       <p class="need-phone">{icon("phone", "ico ico-sm")}<a href="{OFFICE["phone_href"]}">{OFFICE["phone"]}</a></p>
       <p>{HOURS}</p>
-      <p class="need-tell"><a class="card-cta" href="{pre}how-can-we-help/#problem">Tell us <span aria-hidden="true">&rarr;</span></a></p>
+      <p class="need-tell"><a class="card-cta" href="{pre}how-can-we-help/#problem">Send us a message <span aria-hidden="true">&rarr;</span></a></p>
     </div>
   </div>
   <a class="help-fab" href="#need-help">Need help?</a>

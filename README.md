@@ -91,7 +91,7 @@ Checked with axe-core (WCAG 2.0/2.1 A and AA plus best practices) on every page 
 - **Life-moment services:** "Find state services" rows are named for what people need (e.g. "Losing a job, finding work, or getting hurt at work"), with the agency underneath and an icon.
 - **A real person:** copy says a real person on the Constituent Services team reads every message and answers every call.
 - **Open/closed indicator:** next to the phone number, computed in the browser from Eastern time (Mon to Fri, 8am to 5pm). State holidays are not handled yet; production should use the office's real holiday calendar.
-- **"Need help?" band** above the footer on every page (phone, open/closed status, "Tell us" link), plus a sticky "Need help?" button on phones.
+- **"Need help?" band** above the footer on every page (phone, open/closed status, "Send us a message" link), plus a sticky "Need help?" button on phones.
 - **Language picker** shows "Hello" in each language (Hola, Olá, Bonjour, Bonjou...); hover shows the language name.
 - **Governor's letter:** the About bio is a first-person draft signed by the Governor (script font standing in for a real signature image). Needs her and the communications team's review.
 - **Warm accents:** gold from the logo on icons, card tops and heading rules. Gold is decorative only (4.4:1 on blue is below AA for small text).
