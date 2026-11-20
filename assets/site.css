@@ -189,3 +189,45 @@ input[type=file]{font:inherit;font-size:.95rem;max-width:100%}
 .foot-legal{border-top:1px solid rgba(255,255,255,.25);margin-top:24px;padding-top:16px;font-size:.88rem}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* ---------- concierge pass ---------- */
+/* icons: navy line icon on a gold disc (decorative) */
+.ico{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;background:var(--gold);color:var(--navy);flex:none;margin-bottom:14px}
+.ico svg{width:26px;height:26px}
+.ico-sm{width:40px;height:40px;margin:0}
+.ico-sm svg{width:20px;height:20px}
+.card{border-top:4px solid var(--gold)}
+a.card:hover{border-color:var(--blue);border-top-color:var(--gold)}
+/* life-moment rows */
+.acc summary{display:flex;align-items:center;gap:14px;padding:16px 40px 16px 0}
+.acc summary::after{top:50%;transform:translateY(-50%)}
+.acc-t{display:flex;flex-direction:column}
+.acc summary h3{display:block;font-family:var(--body);font-weight:800;font-size:1.08rem;line-height:1.3}
+.acc-sub{font-size:.85rem;color:var(--muted);font-weight:500}
+.acc .link-list{padding:0 0 16px 54px}
+/* open/closed indicator */
+.open-status{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.95rem}
+.open-status .dot{width:12px;height:12px;border-radius:50%;background:var(--muted)}
+.open-status.is-open .dot{background:#1E7F38;box-shadow:0 0 0 4px rgba(30,127,56,.18)}
+.open-status.is-closed .dot{background:var(--err)}
+/* still need help band */
+.need-help{background:var(--white);border-top:6px solid var(--gold);padding:40px 0}
+.need-grid{display:grid;gap:18px;align-items:center}
+.need-help h2{margin-bottom:.3em}
+.need-help p{margin:0 0 10px}
+.need-actions{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.need-phone{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:800;font-size:1.7rem}
+.need-phone a{color:var(--navy);text-decoration:none}
+.need-actions .btn{margin-top:8px}
+@media (min-width:800px){.need-grid{grid-template-columns:1.3fr 1fr}}
+/* sticky help button on phones */
+.help-fab{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;padding:14px 20px;min-height:48px;box-shadow:0 4px 14px rgba(4,13,64,.3);text-transform:uppercase;font-size:.85rem;letter-spacing:.04em}
+.help-fab:hover{color:var(--navy);background:#F7D56A}
+@media (max-width:899px){body{padding-bottom:80px}}
+@media (min-width:900px){.help-fab{display:none}}
+/* about letter */
+.letter .signature{font-family:"Allura","Brush Script MT",cursive;font-size:3.2rem;line-height:1;color:var(--blue);margin:24px 0 4px}
+.letter .sig-name{font-weight:700}
+.page-head .eyebrow{color:var(--white)}
+.hero-copy h1::after,.page-head h1::after{content:"";display:block;width:72px;height:6px;background:var(--gold);margin-top:18px}
+.letter > .ph{white-space:normal;display:inline-block}

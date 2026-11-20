@@ -86,6 +86,16 @@ Built in: semantic landmarks, skip link, visible focus, keyboard-operable menu (
 
 Checked with axe-core (WCAG 2.0/2.1 A and AA plus best practices) on every page at 1280px and 390px: **0 violations** as of the first build. Still to check by hand in production: screen reader passes (VoiceOver, NVDA), 200% zoom and reflow on real devices, the GTranslate dropdown's own accessibility, and the PDFs linked from the site.
 
+## Concierge features (round 6)
+
+- **Life-moment services:** "Find state services" rows are named for what people need (e.g. "Losing a job, finding work, or getting hurt at work"), with the agency underneath and an icon.
+- **A real person:** copy says a real person on the Constituent Services team reads every message and answers every call.
+- **Open/closed indicator:** next to the phone number, computed in the browser from Eastern time (Mon to Fri, 8am to 5pm). State holidays are not handled yet; production should use the office's real holiday calendar.
+- **"Still need help?" band** above the footer on every page, plus a sticky "Need help?" button on phones.
+- **Language picker** shows "Hello" in each language (Hola, Bonjour, Xin chào...); hover shows the language name.
+- **Governor's letter:** the About bio is a first-person draft signed by the Governor (script font standing in for a real signature image). Needs her and the communications team's review.
+- **Warm accents:** gold from the logo on icons, card tops and heading rules. Gold is decorative only (4.4:1 on blue is below AA for small text).
+
 ## Placeholders
 
 Marked in yellow on the page: the bio update, social handles, response-time promise, open positions list, boards list, HR address, press contact and the three sample news items.

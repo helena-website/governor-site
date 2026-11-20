@@ -38,8 +38,9 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
         nav.append(f'<li><a href="{pre}{href}"{cur}>{label}</a></li>')
     names = {"en": "English", "ar": "العربية", "zh-CN": "简体中文", "zh-TW": "繁體中文", "fr": "Français", "it": "Italiano",
              "pl": "Polski", "pt": "Português", "es": "Español", "vi": "Tiếng Việt", "ht": "Kreyòl ayisyen", "km": "ភាសាខ្មែរ"}
-    short = {"zh-CN": "ZH", "zh-TW": "ZH-TW"}
-    opts = "".join(f'<option value="{l}" lang="{l}" title="{names[l]}">{short.get(l, l.upper())}</option>' for l in LANGS)
+    hello = {"en": "Hello", "ar": "مرحبا", "zh-CN": "你好 (简体)", "zh-TW": "你好 (繁體)", "fr": "Bonjour", "it": "Ciao", "pl": "Cześć",
+             "pt": "Olá", "es": "Hola", "vi": "Xin chào", "ht": "Bonjou", "km": "សួស្តី"}
+    opts = "".join(f'<option value="{l}" lang="{l}" title="{names[l]}">{hello[l]}</option>' for l in LANGS)
     lang_select = (f'<label class="sr" for="lang-select">Translate this page</label>'
                    f'<select id="lang-select" class="lang-select notranslate" translate="no">{opts}</select>')
     nav_html = "\n          ".join(nav)
@@ -55,7 +56,7 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
 <meta name="description" content="{esc(desc)}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;800&family=Montserrat:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;800&family=Montserrat:wght@400;500;700;800&family=Allura&display=swap">
 <link rel="icon" type="image/svg+xml" href="{pre}assets/logo-on-white.svg">
 <link rel="stylesheet" href="{pre}assets/site.css">
 <script src="{pre}assets/site.js" defer></script>{script}
@@ -90,6 +91,21 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
 <main id="main" tabindex="-1">
 {body.replace("{pre}", pre).replace("{home}", home)}
 </main>
+
+<section class="need-help" id="need-help" aria-labelledby="need-help-h">
+  <div class="wrap need-grid">
+    <div>
+      <h2 id="need-help-h">Still need help?</h2>
+      <p>A real person on our Constituent Services team reads every message and answers every call.</p>
+    </div>
+    <div class="need-actions">
+      <p class="need-phone">{icon("phone", "ico ico-sm")}<a href="{OFFICE["phone_href"]}">{OFFICE["phone"]}</a></p>
+      <p>{HOURS}</p>
+      <a class="btn btn-blue" href="{pre}how-can-we-help/#problem">Tell us</a>
+    </div>
+  </div>
+  <a class="help-fab" href="#need-help">Need help?</a>
+</section>
 
 <footer class="foot">
   <div class="wrap foot-grid">
@@ -193,17 +209,49 @@ def contact_fields(prefix=""):
     ]
 
 
-def card(href, title, text, cta="Start"):
-    return f"""<a class="card" href="{href}"><h3>{title}</h3><p>{text}</p><span class="card-cta">{cta} <span aria-hidden="true">&rarr;</span></span></a>"""
+# Line icons (Feather-style, MIT). Decorative: always aria-hidden.
+ICONS = {
+    "chat": '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/>',
+    "calendar": '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    "compass": '<circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2.1 6.3-6.3 2.1 2.1-6.3z"/>',
+    "idea": '<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/>',
+    "team": '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    "capitol": '<path d="M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M2 10l10-7 10 7z"/>',
+    "heart": '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/>',
+    "basket": '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/>',
+    "briefcase": '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+    "car": '<path d="M5 17h14v-5l-2-5H7l-2 5z"/><path d="M3 12h18"/><circle cx="7.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/>',
+    "home": '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+    "family": '<circle cx="8" cy="6" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21v-3a5 5 0 0 1 10 0v3M14 21v-2a3 3 0 0 1 6 0v2"/>',
+    "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    "access": '<circle cx="12" cy="4" r="2"/><path d="M5 8l7 1 7-1M12 9v5M12 14l-4 7M12 14l4 7"/>',
+    "star": '<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+    "phone": '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+}
+
+
+def icon(name, cls="ico"):
+    return (f'<span class="{cls}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            f'stroke-linecap="round" stroke-linejoin="round">{ICONS[name]}</svg></span>')
+
+
+def card(href, title, text, cta="Start", ico=None):
+    i = icon(ico) if ico else ""
+    return f"""<a class="card" href="{href}">{i}<h3>{title}</h3><p>{text}</p><span class="card-cta">{cta} <span aria-hidden="true">&rarr;</span></span></a>"""
+
+
+# Open/closed status, filled in by assets/site.js from Eastern time. The text here is the no-JavaScript fallback.
+HOURS = '<span class="open-status" data-open="8" data-close="17"><span class="dot" aria-hidden="true"></span><span class="open-text">Open Monday to Friday, 8am to 5pm</span></span>'
+
 
 
 # ---------- content ----------
 
 AGENCY_LINKS = [
-    ("Health", [("Department of Health", "https://health.ri.gov/"), ("Vital records", "https://health.ri.gov/records"),
+    ("heart", "Health care, birth and death records, and licenses", "Department of Health", [("Department of Health", "https://health.ri.gov/"), ("Vital records", "https://health.ri.gov/records"),
                 ("Facilities licensing", "https://health.ri.gov/licenses"), ("Professional licensing and boards", "https://healthri.mylicense.com/"),
                 ("WIC / Women and Infants Nutrition", "https://health.ri.gov/programs/detail.php?pgm_id=36")]),
-    ("Food, health coverage and family support (DHS)", [("Department of Human Services", "https://dhs.ri.gov/"),
+    ("basket", "Food, health coverage, child care and family support", "Department of Human Services (DHS)", [("Department of Human Services", "https://dhs.ri.gov/"),
                 ("SNAP food assistance", "https://dhs.ri.gov/programs-and-services/supplemental-nutrition-assistance-program-snap"),
                 ("Medicare / Medicaid", "https://dhs.ri.gov/programs-and-services/medicaid-medicare-programs"),
                 ("Energy assistance", "https://dhs.ri.gov/programs-and-services/energy-assistance-programs"),
@@ -212,22 +260,22 @@ AGENCY_LINKS = [
                 ("SSI / supplemental payments", "https://dhs.ri.gov/programs-and-services/ssi-state-supplemental-payment"),
                 ("Family violence advocacy", "https://dhs.ri.gov/resources/family-violence-option-advocacy-program"),
                 ("Long-term services and supports", "https://dhs.ri.gov/programs-and-services/long-term-services-and-supports")]),
-    ("Jobs and unemployment (DLT)", [("Department of Labor and Training", "https://dlt.ri.gov/"),
+    ("briefcase", "Losing a job, finding work, or getting hurt at work", "Department of Labor and Training (DLT)", [("Department of Labor and Training", "https://dlt.ri.gov/"),
                 ("File an unemployment claim", "https://dltweb.dlt.ri.gov/uipua/"), ("Report unemployment fraud", "https://dlt.ri.gov/ui/reportfraud/"),
                 ("Download a 1099-G", "https://dlt.ri.gov/1099/"), ("TDI / TCI", "https://dlt.ri.gov/tdi/"),
                 ("Workers' compensation", "https://dlt.ri.gov/wc/"), ("Find a DLT form", "https://dlt.ri.gov/forms/")]),
-    ("Driving and vehicles (DMV)", [("Division of Motor Vehicles", "https://dmv.ri.gov/"), ("Make a reservation", "https://dmv.ri.gov/make-a-reservation"),
+    ("car", "Driver's licenses, plates and vehicles", "Division of Motor Vehicles (DMV)", [("Division of Motor Vehicles", "https://dmv.ri.gov/"), ("Make a reservation", "https://dmv.ri.gov/make-a-reservation"),
                 ("Driver's licenses", "https://dmv.ri.gov/licenses/"), ("Find a DMV form", "https://dmv.ri.gov/forms/"),
                 ("License plates", "https://dmv.ri.gov/plates/overview/")]),
-    ("Housing", [("Homeless resources", "http://www.rihomeless.org/"), ("Seeking shelter? RI CES", "https://www.cesri.info/"),
+    ("home", "Finding a home, paying rent, or needing shelter", "RI Housing and partners", [("Homeless resources", "http://www.rihomeless.org/"), ("Seeking shelter? RI CES", "https://www.cesri.info/"),
                 ("RI Housing", "https://www.rihousing.com/"), ("Public housing authorities", "https://www.rihousing.com/public-housing-authorities/"),
                 ("Renters' assistance", "https://www.rihousing.com/renters/"), ("Homeowners' assistance", "https://www.rihousing.com/hafri/"),
                 ("Buying a home", "https://www.rihousing.com/buyers/"), ("Find a home", "https://www.housingsearchri.org/")]),
-    ("Child support", [("Office of Child Support Services", "https://ocss.ri.gov/"), ("Apply for services", "https://ocss.ri.gov/apply-services")]),
-    ("Older Rhode Islanders", [("Office of Healthy Aging", "https://oha.ri.gov/"), ("DigiAGE technology help", "https://oha.ri.gov/digiAGE"),
+    ("family", "Getting or paying child support", "Office of Child Support Services", [("Office of Child Support Services", "https://ocss.ri.gov/"), ("Apply for services", "https://ocss.ri.gov/apply-services")]),
+    ("sun", "Caring for an older Rhode Islander", "Office of Healthy Aging", [("Office of Healthy Aging", "https://oha.ri.gov/"), ("DigiAGE technology help", "https://oha.ri.gov/digiAGE"),
                 ("Get help: 211", "https://www.unitedwayri.org/get-help/2-1-1/"), ("Alliance for Better Long Term Care", "http://alliancebltc.org/")]),
-    ("Disability and rehabilitation", [("Office of Rehabilitation Services", "https://ors.ri.gov/"), ("ORS resources", "https://ors.ri.gov/resources/resource-links")]),
-    ("Veterans", [("Office of Veterans Services", "http://www.vets.ri.gov/")]),
+    ("access", "Living and working with a disability", "Office of Rehabilitation Services", [("Office of Rehabilitation Services", "https://ors.ri.gov/"), ("ORS resources", "https://ors.ri.gov/resources/resource-links")]),
+    ("star", "Benefits for veterans and their families", "Office of Veterans Services", [("Office of Veterans Services", "http://www.vets.ri.gov/")]),
 ]
 
 TOPICS = ["Health & Human Services", "Education & Workforce", "Economy", "Housing", "Public Safety & Justice",
@@ -262,7 +310,7 @@ def build():
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1>Let's get to work.</h1>
-      <p class="lead">Governor Helena Foulkes and her team are here to make state government work for every Rhode Islander. Tell us what you need, share an idea, or join us.</p>
+      <p class="lead">We're here to make state government work for you. Tell us what you need, share an idea, or join us.</p>
       <div class="hero-ctas">
         <a class="btn btn-ghost" href="{{pre}}how-can-we-help/">How can we help you?</a>
         <a class="btn btn-ghost" href="{{pre}}get-involved/">Get involved</a>
@@ -279,9 +327,9 @@ def build():
     <h2 id="help-h">How can we help you?</h2>
     <p class="lead-sm">Have a problem, or want the Governor at your event? Start here.</p>
     <div class="cards">
-      {card("{pre}how-can-we-help/#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Get help")}
-      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
-      {card("{pre}how-can-we-help/#find-help", "Find state services", "Quick links to unemployment, SNAP, the DMV, housing help and more.", "See services")}
+      {card("{pre}how-can-we-help/#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Get help", "chat")}
+      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor", "calendar")}
+      {card("{pre}how-can-we-help/#find-help", "Find state services", "Quick links to unemployment, SNAP, the DMV, housing help and more.", "See services", "compass")}
     </div>
   </div>
 </section>
@@ -291,9 +339,9 @@ def build():
     <h2 id="gi-h">Get involved</h2>
     <p class="lead-sm">Rhode Island works better when more of us pitch in.</p>
     <div class="cards">
-      {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us.", "Share your idea")}
-      {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more")}
-      {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more")}
+      {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us.", "Share your idea", "idea")}
+      {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more", "team")}
+      {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more", "capitol")}
     </div>
   </div>
 </section>
@@ -309,22 +357,24 @@ def build():
     <img src="{pre}assets/img/about-family.webp" alt="Governor Helena Foulkes with her husband, Bill" width="1000" height="620">
     <img src="{pre}assets/img/about-placeholder.webp" alt="Governor Foulkes talking with a family at a park" width="1000" height="667">
   </div>
-  <div class="prose">
-    <p>Governor Helena Foulkes is a lifelong Rhode Islander, wife of 36 years, mother of four, grandmother, and cancer survivor. She rose through the ranks of CVS over 25 years to become president of its retail division.</p>
-    <p>As President of CVS Pharmacy, Helena worked to get consumers the lowest possible prescription drug prices. She removed tobacco products from the shelves, even though tobacco brought in $2 billion in revenue, because protecting people's health matters more than profits.</p>
-    <p>Before taking office, Helena partnered with the mayor of Central Falls to improve its public schools, and fought homelessness and domestic violence as a board member and volunteer at nonprofits.</p>
-    <p>As Governor, Helena is focused on making state government work for every Rhode Islander. <span class="ph">Bio to be updated</span></p>
-    <h2>Office of the Governor</h2>
-    <p>Office of the Governor<br>82 Smith Street<br>Providence, RI 02903<br>Phone: <a href="tel:+14012222080">(401) 222-2080</a></p>
+  <div class="prose letter">
+    <p class="ph">Draft in the Governor's voice, for her and the communications team to review</p>
+    <p>I'm a lifelong Rhode Islander, a wife of 36 years, a mother of four, a grandmother and a cancer survivor. I spent 25 years at CVS, rising through the ranks to become president of its retail division.</p>
+    <p>At CVS Pharmacy, I worked to get people the lowest possible prescription drug prices. We took tobacco off our shelves, even though it brought in $2 billion in revenue, because protecting people's health matters more than profits.</p>
+    <p>Before taking office, I partnered with the mayor of Central Falls to improve its public schools, and worked on homelessness and domestic violence as a board member and volunteer at nonprofits.</p>
+    <p>As your Governor, my job is to make state government work for you. If something isn't working, tell us. If you have an idea, share it. Let's get to work.</p>
+    <p class="signature" aria-label="Signed, Helena Foulkes">Helena Foulkes</p>
+    <p class="sig-name">Governor Helena Foulkes <span class="ph">Signature image TBD</span></p>
   </div>
 </div></section>
 """, desc="About Governor Helena Foulkes.")
 
     # ---- How can we help ----
     groups = []
-    for i, (name, links) in enumerate(AGENCY_LINKS):
+    for ico, name, agency, links in AGENCY_LINKS:
         lis = "".join(f'<li><a href="{u}">{n}</a></li>' for n, u in links)
-        groups.append(f'<details class="acc"><summary><h3>{name}</h3></summary><ul class="link-list">{lis}</ul></details>')
+        groups.append(f'<details class="acc"><summary>{icon(ico, "ico ico-sm")}<span class="acc-t"><h3>{name}</h3>'
+                      f'<span class="acc-sub">{agency}</span></span></summary><ul class="link-list">{lis}</ul></details>')
     problem = form("problem-form", "Tell us about your problem",
                    "the Governor's Constituent Services Office (today this form feeds the office's IQ case system)",
                    contact_fields() + [
@@ -333,7 +383,7 @@ def build():
                        field("message", "What's going on?", "textarea", req=True, full=True,
                              hint="Tell us what happened, which agency you've worked with, and any case or confirmation number. Please don't include your full Social Security number."),
                    ], submit="Send to the Governor's office",
-                   intro="Tell us what's going on. We will look into it and get back to you.")
+                   intro="Tell us what's going on. A real person on our Constituent Services team reads every message, and we will look into it and get back to you.")
     page("how-can-we-help/", "How Can We Help You", f"""
 <section class="page-head"><div class="wrap"><p class="eyebrow">Constituent services</p><h1>How can we help you?</h1>
 <p class="lead">Our Constituent Services Office is here to serve all Rhode Islanders. Choose what you need below.</p></div></section>
@@ -341,9 +391,9 @@ def build():
 <section class="band" aria-labelledby="choose-h"><div class="wrap">
   <h2 id="choose-h" class="sr">Choose what you need</h2>
   <div class="cards">
-    {card("#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Tell us")}
-    {card("#find-help", "Find state services", "Quick links to the most-requested state services.", "See services")}
-    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor")}
+    {card("#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Tell us", "chat")}
+    {card("#find-help", "Find state services", "Quick links to the most-requested state services.", "See services", "compass")}
+    {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor", "calendar")}
   </div>
 </div></section>
 
@@ -351,6 +401,7 @@ def build():
   <div class="call-box">
     <h2>Call us</h2>
     <p>Call the Constituent Services at <a href="tel:+14012222080">(401) 222-2080</a>. We're available 8am-5pm Monday through Friday. We'll get back to you if we miss your call.</p>
+    <p>{HOURS}</p>
   </div>
   {problem}
 </div></section>
@@ -414,9 +465,9 @@ def build():
 <section class="band" aria-labelledby="ways-h"><div class="wrap">
   <h2 id="ways-h" class="sr">Ways to get involved</h2>
   <div class="cards">
-    {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us the problem and your idea.", "Share your idea")}
-    {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more")}
-    {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more")}
+    {card("{pre}get-involved/share-an-idea/", "Share an idea", "What could the state fix or do better? Tell us the problem and your idea.", "Share your idea", "idea")}
+    {card("{pre}get-involved/join-the-team/", "Be part of the team", "Interested in a role in a state agency or the Governor's Office?", "Learn more", "team")}
+    {card("{pre}get-involved/boards-and-commissions/", "Join a board or commission", "Serve your community on one of the state's boards or commissions.", "Learn more", "capitol")}
   </div>
 </div></section>
 """, desc="Get involved with the Office of Governor Helena Foulkes.")
