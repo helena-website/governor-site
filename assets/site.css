@@ -211,16 +211,17 @@ a.card:hover{border-color:var(--blue);border-top-color:var(--gold)}
 .open-status.is-open .dot{background:#1E7F38;box-shadow:0 0 0 4px rgba(30,127,56,.18)}
 .open-status.is-closed .dot{background:var(--err)}
 /* need help band: compact, same on every page */
-.need-help{background:var(--white);border-top:5px solid var(--gold);padding:22px 0}
+.need-help{background:var(--white);border-top:5px solid var(--gold);padding:32px 0}
 .need-grid{display:grid;gap:10px;align-items:center}
 .need-help h2{font-size:1.5rem;margin:0 0 .15em}
 .need-help p{margin:0}
-.need-call{display:flex;flex-direction:column;gap:4px}
+.need-call{display:flex;flex-direction:column;gap:6px}
+.need-tell{margin-top:4px!important}
 .need-phone{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.4rem}
 .need-phone a{color:var(--navy);text-decoration:none}
 .need-tell .card-cta{text-decoration:none}
 .need-tell .card-cta:hover{text-decoration:underline}
-@media (min-width:900px){.need-grid{grid-template-columns:1.4fr 1fr auto;gap:28px}}
+@media (min-width:900px){.need-grid{grid-template-columns:1.4fr 1fr;gap:28px}}
 /* sticky help button on phones */
 .help-fab{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;padding:14px 20px;min-height:48px;box-shadow:0 4px 14px rgba(4,13,64,.3);text-transform:uppercase;font-size:.85rem;letter-spacing:.04em}
 .help-fab:hover{color:var(--navy);background:#F7D56A}

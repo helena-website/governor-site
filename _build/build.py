@@ -100,8 +100,8 @@ def page(path, title, body, desc="", forms=False, pre=None, out_file=None):
     <div class="need-call">
       <p class="need-phone">{icon("phone", "ico ico-sm")}<a href="{OFFICE["phone_href"]}">{OFFICE["phone"]}</a></p>
       <p>{HOURS}</p>
+      <p class="need-tell"><a class="card-cta" href="{pre}how-can-we-help/#problem">Tell us <span aria-hidden="true">&rarr;</span></a></p>
     </div>
-    <p class="need-tell"><a class="card-cta" href="{pre}how-can-we-help/#problem">Tell us <span aria-hidden="true">&rarr;</span></a></p>
   </div>
   <a class="help-fab" href="#need-help">Need help?</a>
 </section>
@@ -327,8 +327,8 @@ def build():
     <p class="lead-sm">Have a problem, or want the Governor at your event? Start here.</p>
     <div class="cards">
       {card("{pre}how-can-we-help/#problem", "I have a problem", "Call or let us know what's going on and we'll get back to you.", "Get help", "chat")}
-      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor", "calendar")}
       {card("{pre}how-can-we-help/#find-help", "Find state services", "Quick links to unemployment, SNAP, the DMV, housing help and more.", "See services", "compass")}
+      {card("{pre}how-can-we-help/invite-the-governor/", "Invite the Governor", "Ask the Governor to attend or speak at your event.", "Request the Governor", "calendar")}
     </div>
   </div>
 </section>
